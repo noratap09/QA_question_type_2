@@ -94,7 +94,7 @@ def ck_point(all_input,all_output,k):
         np.save("train_data\input\input_B_"+str(k),all_input)
         np.save("train_data\output\output_B_"+str(k),all_output)
 
-for count_data , data in enumerate(json_obj['data'][0:15010],start=1):
+for count_data , data in enumerate(json_obj['data'][0:15003],start=1):
     if(data['question_type']==2):
         question_id = data['question_id']
         print("QUESTION_ID: ",question_id)
@@ -107,7 +107,7 @@ for count_data , data in enumerate(json_obj['data'][0:15010],start=1):
         txt = txt['_source']['text']
         txt = [x.lower() for x in txt]
 
-        print("TXT : ",txt)
+        #print("TXT : ",txt)
 
         ck_answer = list()
         answer = data['answer']
@@ -120,6 +120,8 @@ for count_data , data in enumerate(json_obj['data'][0:15010],start=1):
 
                 result_pos = pos_tag(input_text)
 
+                print("Tag : ",i)
+                print("CK_ANS : ",answer)
                 print("QUESTION : ",question)
                 print("INPUT TXT : ","".join(input_text))
                 #print(len(txt)," > ",i,":",i*slide_size,"-",i*slide_size+input_text_len)
@@ -131,11 +133,13 @@ for count_data , data in enumerate(json_obj['data'][0:15010],start=1):
                         pre_data[n_j,Word2Vec_len+(pos_all.index(result_pos[n_j][1]))] = 1.0
                 #draw_heat_map
                 import heat_map
-                heat_map.make_heatmap("heatmap/"+str(question_id)+"_"+str(i)+".png",question,input_text,pre_data)
+                question
+                temp = list()
+                heat_map.make_heatmap("heatmap/"+str(question_id)+"_"+str(i)+".png",temp,input_text,pre_data)
 
                 #get output
-                temp = input("INPUT ANS :")
-                pre_ans[temp] = 1.0
+                temp = input("INPUT ANS : ")
+                pre_ans[int(temp)] = 1.0
                 #0 = Yes
                 #1 = midle
                 #2 = No
@@ -145,7 +149,6 @@ for count_data , data in enumerate(json_obj['data'][0:15010],start=1):
                 all_input.append(pre_data)
                 all_output.append(pre_ans)
 
-        print("CK_ANS : ",answer)
         #check_point
         ck_point(all_input,all_output,int(question_id))
         all_input.clear()
