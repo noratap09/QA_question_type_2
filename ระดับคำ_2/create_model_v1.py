@@ -129,7 +129,7 @@ model.summary()
 
 #Save Model Diagram
 from keras.utils import plot_model
-plot_model(model, to_file='model_Unet_Con1d_Bi_Input.png')
+plot_model(model, to_file='model_v1.png')
 
 #Train model            
 model.compile(optimizer='adam',
